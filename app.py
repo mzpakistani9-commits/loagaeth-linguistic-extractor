@@ -14,9 +14,14 @@ Covers 50+ scripts, 120+ languages including:
 
 import os
 import base64
-import anthropic
+import requests
 import gradio as gr
 from pathlib import Path
+
+# ─── OPENROUTER CONFIGURATION ───────────────────────────────────────────────
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_MODEL = "anthropic/claude-3.5-sonnet"  # OpenRouter's full model identifier
 
 # ─── MASTER KNOWLEDGE BASE ──────────────────────────────────────────────────
 MASTER_KNOWLEDGE = """
@@ -245,24 +250,29 @@ def analyse_text(
     ms_context: str,
     api_key: str,
 ) -> str:
-    """Main analysis function called by Gradio."""
+    """Main analysis function called by Gradio. Uses OpenRouter API."""
 
-    if not api_key or not api_key.strip().startswith("sk-"):
-        return "⚠ Please enter a valid Anthropic API key (starts with sk-ant-...)."
+    # Use UI-provided key if given, else fall back to env variable
+    key = (api_key or "").strip() or OPENROUTER_API_KEY
+    if not key or not key.startswith("sk-or-"):
+        return (
+            "⚠ OpenRouter API key required.\n"
+            "• Set environment variable: OPENROUTER_API_KEY\n"
+            "• Or paste your key in the input field above (starts with sk-or-...)\n"
+            "• Get a free key at: https://openrouter.ai/keys"
+        )
 
-    client = anthropic.Anthropic(api_key=api_key.strip())
     system = build_system_prompt(mode, selected_scripts, output_format, depth, ms_context)
 
-    # Build user message
-    content = []
+    # Build user message content (OpenAI-compatible format used by OpenRouter)
+    user_content = []
 
     if image_input is not None:
-        # Convert PIL image to base64
+        # Convert numpy array to base64 JPEG (handles RGBA / palette / grayscale)
         import io
         from PIL import Image
         buf = io.BytesIO()
         img = Image.fromarray(image_input)
-        # Fix: convert RGBA/grayscale to RGB before JPEG save
         if img.mode in ("RGBA", "LA", "P"):
             background = Image.new("RGB", img.size, (255, 255, 255))
             if img.mode == "P":
@@ -273,50 +283,96 @@ def analyse_text(
             img = img.convert("RGB")
         img.save(buf, format="JPEG", quality=85)
         b64 = base64.b64encode(buf.getvalue()).decode()
-        content.append({
-            "type": "image",
-            "source": {"type": "base64", "media_type": "image/jpeg", "data": b64},
+
+        # OpenRouter / OpenAI multimodal format: image_url with data URI
+        user_content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:image/jpeg;base64,{b64}"},
         })
-        content.append({
+        user_content.append({
             "type": "text",
-            "text": f"Analyse this image. Identify ALL scripts, symbols, writing systems, glyphs. Apply full ancient language analysis including Voynich EVA, Enochian, Hildegard, Indus seals, Gardiner hieroglyphs, Angel Runic, and all esoteric systems.{f' Context: {ms_context}' if ms_context else ''}",
+            "text": (
+                "Analyse this image. Identify ALL scripts, symbols, writing systems, glyphs. "
+                "Apply full ancient language analysis including Voynich EVA, Enochian, Hildegard, "
+                "Indus seals, Gardiner hieroglyphs, Angel Runic, and all esoteric systems."
+                f"{f' Context: {ms_context}' if ms_context else ''}"
+            ),
         })
     elif text_input and text_input.strip():
-        content.append({
+        user_content.append({
             "type": "text",
             "text": f"Analyse this text using your full specialist knowledge:\n\n{text_input}",
         })
     else:
         # Demo mode
-        content.append({
+        user_content.append({
             "type": "text",
-            "text": f"Demonstrate your expertise. Provide a comprehensive comparative analysis of: (1) Enochian language structure + Loagaeth statistical fingerprint, (2) Indus Valley Script decipherment progress, (3) Voynich MS Tucker cipher analysis, (4) Cross-religious divine name cognates (IAD→YHWH→ALLAH chain), (5) Top 5 open questions for digital humanities. Format as {output_format}.",
+            "text": (
+                f"Demonstrate your expertise. Provide a comprehensive comparative analysis of: "
+                f"(1) Enochian language structure + Loagaeth statistical fingerprint, "
+                f"(2) Indus Valley Script decipherment progress, "
+                f"(3) Voynich MS Tucker cipher analysis, "
+                f"(4) Cross-religious divine name cognates (IAD→YHWH→ALLAH chain), "
+                f"(5) Top 5 open questions for digital humanities. Format as {output_format}."
+            ),
         })
 
+    # OpenRouter uses OpenAI-compatible chat format: messages with role + content
+    payload = {
+        "model": OPENROUTER_MODEL,
+        "max_tokens": 4000,
+        "messages": [
+            {"role": "system", "content": system},
+            {"role": "user", "content": user_content},
+        ],
+    }
+
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://huggingface.co/spaces/loagaeth-extractor",
+        "X-Title": "OMEGA v5 — Ancient Language Intelligence",
+    }
+
     try:
-        response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            max_tokens=4000,
-            system=system,
-            messages=[{"role": "user", "content": content}],
+        response = requests.post(
+            OPENROUTER_ENDPOINT,
+            headers=headers,
+            json=payload,
+            timeout=120,
         )
-        return response.content[0].text
-    except anthropic.AuthenticationError:
-        return "⚠ Invalid API key. Get one at console.anthropic.com → API Keys."
-    except anthropic.RateLimitError:
-        return "⚠ Rate limit reached. Wait a moment and try again."
+        if response.status_code == 401:
+            return "⚠ Invalid API key. Get one at https://openrouter.ai/keys"
+        if response.status_code == 429:
+            return "⚠ Rate limit reached. Wait a moment and try again."
+        if response.status_code != 200:
+            return f"⚠ API error {response.status_code}: {response.text[:500]}"
+
+        data = response.json()
+        if "error" in data:
+            return f"⚠ Error: {data['error'].get('message', str(data['error']))}"
+
+        # OpenAI-compatible response: choices[0].message.content
+        return data["choices"][0]["message"]["content"]
+
+    except requests.exceptions.Timeout:
+        return "⚠ Request timed out (120s). Try again or use shorter input."
+    except requests.exceptions.RequestException as e:
+        return f"⚠ Network error: {str(e)}"
+    except (KeyError, IndexError) as e:
+        return f"⚠ Unexpected API response format: {str(e)}"
     except Exception as e:
         return f"⚠ Error: {str(e)}"
 
 
 def gardiner_translate(codes: str, mode: str, api_key: str) -> str:
-    """Translate Gardiner codes via AI."""
-    if not api_key or not api_key.strip().startswith("sk-"):
-        return "⚠ API key required."
+    """Translate Gardiner codes via OpenRouter API."""
+    key = (api_key or "").strip() or OPENROUTER_API_KEY
+    if not key or not key.startswith("sk-or-"):
+        return "⚠ OpenRouter API key required (sk-or-...). Set OPENROUTER_API_KEY env var or paste key above."
     if not codes.strip():
         return "⚠ Enter Gardiner codes (e.g. G17 N35 X1 O1)."
 
-    client = anthropic.Anthropic(api_key=api_key.strip())
     sys = f"""You are an expert Egyptologist using the Google Fabricius Workbench methodology and Berlin-Brandenburg Academy dictionary (CC BY-SA 4.0).
 
 {MASTER_KNOWLEDGE}
@@ -330,13 +386,43 @@ For the Gardiner codes provided:
 6. Cross-religious parallels
 Mode: {mode}"""
 
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=2000,
-        system=sys,
-        messages=[{"role": "user", "content": f"Translate these Egyptian hieroglyphs (Gardiner codes):\n{codes}"}],
-    )
-    return response.content[0].text
+    payload = {
+        "model": OPENROUTER_MODEL,
+        "max_tokens": 2000,
+        "messages": [
+            {"role": "system", "content": sys},
+            {"role": "user", "content": f"Translate these Egyptian hieroglyphs (Gardiner codes):\n{codes}"},
+        ],
+    }
+
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://huggingface.co/spaces/loagaeth-extractor",
+        "X-Title": "OMEGA v5 — Fabricius Translator",
+    }
+
+    try:
+        response = requests.post(
+            OPENROUTER_ENDPOINT,
+            headers=headers,
+            json=payload,
+            timeout=120,
+        )
+        if response.status_code != 200:
+            return f"⚠ API error {response.status_code}: {response.text[:500]}"
+        data = response.json()
+        if "error" in data:
+            return f"⚠ Error: {data['error'].get('message', str(data['error']))}"
+        return data["choices"][0]["message"]["content"]
+    except requests.exceptions.Timeout:
+        return "⚠ Request timed out (120s). Try again."
+    except requests.exceptions.RequestException as e:
+        return f"⚠ Network error: {str(e)}"
+    except (KeyError, IndexError) as e:
+        return f"⚠ Unexpected API response: {str(e)}"
+    except Exception as e:
+        return f"⚠ Error: {str(e)}"
 
 
 # ─── GRADIO INTERFACE ────────────────────────────────────────────────────────
@@ -377,10 +463,10 @@ with gr.Blocks(title="OMEGA v5 — Ancient Language Intelligence") as demo:
             with gr.Row():
                 with gr.Column(scale=1):
                     api_key = gr.Textbox(
-                        label="Anthropic API Key",
-                        placeholder="sk-ant-...",
+                        label="OpenRouter API Key (optional if OPENROUTER_API_KEY env var is set)",
+                        placeholder="sk-or-v1-...",
                         type="password",
-                        info="Get free key at console.anthropic.com. Stored only in this session.",
+                        info="Get free key at openrouter.ai/keys. Or set OPENROUTER_API_KEY env variable.",
                     )
                     text_input = gr.Textbox(
                         label="Text Input",
@@ -489,7 +575,11 @@ T=warfare, U=agriculture, V=rope, W=vessels, X=bread, Y=writing, Z=strokes, Aa=u
                     ],
                     value="Full translation + phonetic analysis",
                 )
-            api_key_fab = gr.Textbox(label="API Key", type="password", placeholder="sk-ant-...")
+            api_key_fab = gr.Textbox(
+                label="OpenRouter API Key (optional if env var set)",
+                type="password",
+                placeholder="sk-or-v1-...",
+            )
             gard_btn = gr.Button("𓂀  Translate Hieroglyphs", variant="primary")
             gard_result = gr.Textbox(label="Translation Result", lines=20, elem_classes=["output-textbox"])
             gard_btn.click(fn=gardiner_translate, inputs=[gard_input, gard_mode, api_key_fab], outputs=gard_result)
@@ -529,7 +619,8 @@ This knowledge is **automatically injected into every AI query** — you never n
 
 **Researcher**: Muhammad Zubair | MS Clinical Psychology | Bahria University Lahore, Pakistan  
 **Contact**: mzpakistani9@gmail.com | DesiMindCare.com  
-**AI Engine**: Claude (Anthropic) — claude-sonnet-4-20250514  
+**AI Engine**: Claude 3.5 Sonnet via OpenRouter (anthropic/claude-3.5-sonnet)  
+**API Provider**: OpenRouter — https://openrouter.ai  
 
 ### Published Research Foundation
 > Zubair, M. (2026). *The Aldaraia Tables of the Book of Soyga: First Systematic Etymological Analysis of the 36 Seed Keywords, Complete Main-Diagonal Extraction, and Information-Theoretic Verification of the Reeds Cellular Automaton (1560).* Department of Psychology, Bahria University, Lahore, Pakistan.
