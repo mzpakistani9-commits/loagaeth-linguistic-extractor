@@ -1,0 +1,1784 @@
+{
+  "description": "Multi-layer consensus ink detections for Frag1",
+  "method": "Tiles where ink_probability >= 0.05 in at least 2 of 3 layers (27, 28, 29)",
+  "author": "Muhammad Zubair",
+  "github": "https://github.com/mzpakistani9-commits/loagaeth-linguistic-extractor",
+  "tiles": [
+    {
+      "tile_x": 2000,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.28,
+        "layer_28": 0.18,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.17,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.17,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.280 28=0.180 29=0.050"
+    },
+    {
+      "tile_x": 400,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.35
+      },
+      "fused_probability": 0.16,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.16,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.350"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.28,
+        "layer_28": 0.08,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.16,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.16,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2166,
+      "letter_candidates": [],
+      "notes": "27=0.280 28=0.080 29=0.120"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.12,
+        "layer_29": 0.18
+      },
+      "fused_probability": 0.14,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.14,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5008,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.120 29=0.180"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 3000,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.18
+      },
+      "fused_probability": 0.1267,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1267,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5078,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.180"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 5000,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.18,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.1267,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1267,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1398,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.180 29=0.080"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 5400,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.12,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.12,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.12,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4733,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.120 29=0.030"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 1000,
+      "probabilities": {
+        "layer_27": 0.18,
+        "layer_28": 0.13,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.12,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.12,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0214,
+      "letter_candidates": [],
+      "notes": "27=0.180 28=0.130 29=0.050"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.12,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.12,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.12,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5437,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.120 29=0.120"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 4800,
+      "probabilities": {
+        "layer_27": 0.1,
+        "layer_28": 0.13,
+        "layer_29": 0.13
+      },
+      "fused_probability": 0.12,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.12,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2335,
+      "letter_candidates": [],
+      "notes": "27=0.100 28=0.130 29=0.130"
+    },
+    {
+      "tile_x": 4000,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.15
+      },
+      "fused_probability": 0.1167,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1167,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.7841,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.150"
+    },
+    {
+      "tile_x": 1200,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.06,
+        "layer_28": 0.12,
+        "layer_29": 0.15
+      },
+      "fused_probability": 0.11,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.11,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2984,
+      "letter_candidates": [],
+      "notes": "27=0.060 28=0.120 29=0.150"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 3600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.12,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.1067,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1067,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0077,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.120 29=0.120"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.12,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.1067,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1067,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5238,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.120 29=0.120"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.12,
+        "layer_29": 0.15
+      },
+      "fused_probability": 0.1067,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1067,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4614,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.120 29=0.150"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.15,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.1033,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1033,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1936,
+      "letter_candidates": [],
+      "notes": "27=0.150 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.04
+      },
+      "fused_probability": 0.1,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.1,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3088,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.040"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.08,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.1,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.1,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2392,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.080 29=0.120"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 1000,
+      "probabilities": {
+        "layer_27": 0.15,
+        "layer_28": 0.08,
+        "layer_29": 0.07
+      },
+      "fused_probability": 0.1,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.1,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4676,
+      "letter_candidates": [],
+      "notes": "27=0.150 28=0.080 29=0.070"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 2800,
+      "probabilities": {
+        "layer_27": 0.1,
+        "layer_28": 0.08,
+        "layer_29": 0.115
+      },
+      "fused_probability": 0.0983,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0983,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.7032,
+      "letter_candidates": [],
+      "notes": "27=0.100 28=0.080 29=0.115"
+    },
+    {
+      "tile_x": 3800,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.12,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.0967,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0967,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3573,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.120 29=0.050"
+    },
+    {
+      "tile_x": 1400,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.12,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.120 29=0.080"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1639,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 3200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.15,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.6422,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.150 29=0.080"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.12,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.901,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.120 29=0.080"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.120"
+    },
+    {
+      "tile_x": 3800,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.15
+      },
+      "fused_probability": 0.0933,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0933,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.7976,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.150"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.06,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0867,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0867,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.060 29=0.080"
+    },
+    {
+      "tile_x": 600,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.04,
+        "layer_28": 0.12,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3129,
+      "letter_candidates": [],
+      "notes": "27=0.040 28=0.120 29=0.050"
+    },
+    {
+      "tile_x": 1200,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.03,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.030 29=0.050"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 3600,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3826,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.120"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.05,
+        "layer_29": 0.01
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.050 29=0.010"
+    },
+    {
+      "tile_x": 3400,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.12
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1324,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.120"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.05,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.085,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.085,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.050 29=0.030"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0833,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0833,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.719,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.15,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.0833,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0833,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0813,
+      "letter_candidates": [],
+      "notes": "27=0.150 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.12,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.0833,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0833,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.7188,
+      "letter_candidates": [],
+      "notes": "27=0.120 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 1000,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 1200,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0831,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 3200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.03,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3112,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.030 29=0.080"
+    },
+    {
+      "tile_x": 1600,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5416,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 3000,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4018,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.020"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 2000,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5886,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 5400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.020"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.03,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.004,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.030 29=0.080"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 5000,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0314,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4135,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.020"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 5000,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.08,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.08,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3718,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.075,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0783,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0783,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4506,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.075 29=0.080"
+    },
+    {
+      "tile_x": 1000,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.1,
+        "layer_28": 0.055,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.0775,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0775,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0016,
+      "letter_candidates": [],
+      "notes": "27=0.100 28=0.055 29=0.030"
+    },
+    {
+      "tile_x": 1000,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.04,
+        "layer_28": 0.07,
+        "layer_29": 0.085
+      },
+      "fused_probability": 0.0775,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0775,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2123,
+      "letter_candidates": [],
+      "notes": "27=0.040 28=0.070 29=0.085"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.06,
+        "layer_28": 0.12,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.0767,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0767,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.060 28=0.120 29=0.050"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.06,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0733,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0733,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.060 29=0.080"
+    },
+    {
+      "tile_x": 3400,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.06,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0733,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0733,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.060 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.035,
+        "layer_28": 0.07,
+        "layer_29": 0.075
+      },
+      "fused_probability": 0.0725,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0725,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.4866,
+      "letter_candidates": [],
+      "notes": "27=0.035 28=0.070 29=0.075"
+    },
+    {
+      "tile_x": 1000,
+      "tile_y": 3600,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.07,
+        "layer_29": 0.07
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0161,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.070 29=0.070"
+    },
+    {
+      "tile_x": 1000,
+      "tile_y": 5400,
+      "probabilities": {
+        "layer_27": 0.07,
+        "layer_28": 0.07,
+        "layer_29": 0.015
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0151,
+      "letter_candidates": [],
+      "notes": "27=0.070 28=0.070 29=0.015"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 1200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 1600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 2600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3408,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3099,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.07,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.07,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5474,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.080"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 6000,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.07,
+        "layer_29": 0.065
+      },
+      "fused_probability": 0.0675,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0675,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1926,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.070 29=0.065"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.085,
+        "layer_28": 0.055,
+        "layer_29": 0.06
+      },
+      "fused_probability": 0.0667,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0667,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.8057,
+      "letter_candidates": [],
+      "notes": "27=0.085 28=0.055 29=0.060"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 4800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.06,
+        "layer_29": 0.06
+      },
+      "fused_probability": 0.0667,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0667,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5616,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.060 29=0.060"
+    },
+    {
+      "tile_x": 1400,
+      "tile_y": 1600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.02,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.208,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.020 29=0.050"
+    },
+    {
+      "tile_x": 1800,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2624,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.030"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 4600,
+      "probabilities": {
+        "layer_27": 0.065,
+        "layer_28": 0.02,
+        "layer_29": 0.065
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1595,
+      "letter_candidates": [],
+      "notes": "27=0.065 28=0.020 29=0.065"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 1200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.030"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 2000,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.04
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2179,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.040"
+    },
+    {
+      "tile_x": 3400,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.04,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.9147,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.040 29=0.050"
+    },
+    {
+      "tile_x": 3400,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1668,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.030"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 800,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0968,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.116,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 3800,
+      "tile_y": 3400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.02,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.020 29=0.050"
+    },
+    {
+      "tile_x": 3800,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2322,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.020"
+    },
+    {
+      "tile_x": 4000,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.0
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0056,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.000"
+    },
+    {
+      "tile_x": 4200,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.04,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.065,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.065,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.040 29=0.050"
+    },
+    {
+      "tile_x": 600,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.06,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.0633,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0633,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.060 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 1000,
+      "probabilities": {
+        "layer_27": 0.065,
+        "layer_28": 0.065,
+        "layer_29": 0.055
+      },
+      "fused_probability": 0.0617,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.0617,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0465,
+      "letter_candidates": [],
+      "notes": "27=0.065 28=0.065 29=0.055"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 3400,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 5200,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3336,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 2000,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2064,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.08,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5129,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.080 29=0.050"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.08
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.080"
+    },
+    {
+      "tile_x": 2600,
+      "tile_y": 5600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 2600,
+      "probabilities": {
+        "layer_27": 0.08,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.06,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.06,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0127,
+      "letter_candidates": [],
+      "notes": "27=0.080 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.035,
+        "layer_29": 0.065
+      },
+      "fused_probability": 0.0575,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0575,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1453,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.035 29=0.065"
+    },
+    {
+      "tile_x": 2800,
+      "tile_y": 2400,
+      "probabilities": {
+        "layer_27": 0.055,
+        "layer_28": 0.055,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.055,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.055,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.055 28=0.055 29=0.050"
+    },
+    {
+      "tile_x": 4600,
+      "tile_y": 1200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.055,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.0525,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.0525,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.055 29=0.020"
+    },
+    {
+      "tile_x": 800,
+      "tile_y": 3800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3009,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 1400,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 1800,
+      "tile_y": 3000,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2047,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 1800,
+      "tile_y": 4400,
+      "probabilities": {
+        "layer_27": 0.0,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.000 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 1800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0046,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.020"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3315,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.020"
+    },
+    {
+      "tile_x": 2200,
+      "tile_y": 4400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.02,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2824,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.020 29=0.050"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 3000,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.03
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.5931,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.030"
+    },
+    {
+      "tile_x": 2400,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.8838,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.02,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3081,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.020 29=0.050"
+    },
+    {
+      "tile_x": 3000,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.04,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1496,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.040 29=0.050"
+    },
+    {
+      "tile_x": 3200,
+      "tile_y": 5800,
+      "probabilities": {
+        "layer_27": 0.04,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.2011,
+      "letter_candidates": [],
+      "notes": "27=0.040 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3400,
+      "tile_y": 1400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.02,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3403,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.020 29=0.050"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 2600,
+      "probabilities": {
+        "layer_27": 0.02,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.1112,
+      "letter_candidates": [],
+      "notes": "27=0.020 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 3600,
+      "tile_y": 5400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.163,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.020"
+    },
+    {
+      "tile_x": 3800,
+      "tile_y": 4200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.05
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 3,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.0274,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.050"
+    },
+    {
+      "tile_x": 4200,
+      "tile_y": 600,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.04
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": true,
+      "ground_truth_ink_fraction": 0.3619,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.040"
+    },
+    {
+      "tile_x": 4400,
+      "tile_y": 1400,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.020"
+    },
+    {
+      "tile_x": 5000,
+      "tile_y": 2200,
+      "probabilities": {
+        "layer_27": 0.05,
+        "layer_28": 0.05,
+        "layer_29": 0.02
+      },
+      "fused_probability": 0.05,
+      "layers_above_threshold": 2,
+      "fused_probability_average": 0.05,
+      "has_ground_truth_ink": false,
+      "ground_truth_ink_fraction": 0.0,
+      "letter_candidates": [],
+      "notes": "27=0.050 28=0.050 29=0.020"
+    }
+  ]
+}
