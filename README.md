@@ -207,3 +207,11 @@ Also cite the foundational work this builds on:
 
 *"Scientia non habet inimicum preter ignorantem"*  
 *Knowledge has no enemy other than ignorance — Book of Soyga maxim*
+
+---
+
+## Vesuvius Challenge Extension
+
+This tool has been extended for the [Vesuvius Challenge](https://scrollprize.org) to detect ink in Herculaneum scroll CT scans using the same Claude vision API infrastructure, extended with Greek uncial character detection rules.
+
+See the [`vesuvius/`](vesuvius/) folder for the ink detection pipeline, results, and 111-tile consensus map of Frag1 layers 27, 28, 29.
