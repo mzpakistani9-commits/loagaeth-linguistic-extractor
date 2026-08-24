@@ -31,6 +31,24 @@ This submission uses a tile-based Claude Opus 4.8 vision pipeline (routed throug
 - **Consensus tiles (2+ layers)**: 111
 - **Tile-level F1 @ thr=0.01**: 0.67 (precision 0.58, recall 0.79)
 
+### Evaluation: full threshold sweep (layer 28, 583 tiles)
+
+Ground-truth-positive tile = >2% pixels with labeled ink. Full sweep in [`results/analysis/pr_sweep_layer28.json`](results/analysis/pr_sweep_layer28.json), curve in [`results/analysis/pr_curve_layer28.png`](results/analysis/pr_curve_layer28.png):
+
+| thr | Precision | Recall | F1 |
+|------|-----------|--------|------|
+| 0.005 | 0.580 | 0.789 | **0.668** |
+| 0.02 | 0.588 | 0.765 | 0.665 |
+| 0.03 | 0.619 | 0.362 | 0.457 |
+| 0.05 | 0.678 | 0.254 | 0.369 |
+| 0.10 | 0.864 | 0.059 | 0.110 |
+
+Operating point chosen at the F1 peak (thr≈0.01); precision rises monotonically to **1.000** by thr=0.15, showing the model's high-probability calls are trustworthy while low thresholds trade precision for recall.
+
+### Letter-candidate evidence
+
+Raw model responses include structured `letter_candidates` per tile. Mining across all three layers yields tiles with repeated independent glyph detections — e.g. tile (2688, 672) with **8 cross-layer candidate hits and 0.64 ground-truth ink fraction**. Full ranked list: [`results/analysis/letter_candidate_tiles.json`](results/analysis/letter_candidate_tiles.json). Visual evidence crops of the top-10 consensus tiles (red tint = ground-truth ink): [`results/analysis/top_tiles/`](results/analysis/top_tiles/).
+
 ### Key Innovations
 
 - **Brightness-weighted layer selection**: Prioritizing the most ink-visible layers.

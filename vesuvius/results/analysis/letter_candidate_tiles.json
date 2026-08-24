@@ -1,0 +1,137 @@
+[
+ {
+  "tile": [
+   2240,
+   896
+  ],
+  "candidate_hits_across_layers": 9,
+  "gt_ink_fraction": 0.6,
+  "example_note": "Sparse fragmented dark strokes clustered upper-left; most of tile is blank surface with possible ink traces."
+ },
+ {
+  "tile": [
+   672,
+   6496
+  ],
+  "candidate_hits_across_layers": 9,
+  "gt_ink_fraction": 0.0,
+  "example_note": "Sparse fragmented curvilinear strokes concentrated in the upper-central band, most consistent with degraded cursive ink."
+ },
+ {
+  "tile": [
+   2688,
+   672
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.64,
+  "example_note": "Sparse dark curvilinear marks on light substrate, possibly fragmentary ink traces amid mostly blank surface."
+ },
+ {
+  "tile": [
+   4032,
+   672
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.53,
+  "example_note": "Faint discontinuous dark dashes across upper-center; likely ink traces or fiber-edge artifacts on an otherwise blank surface."
+ },
+ {
+  "tile": [
+   3360,
+   2464
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.0,
+  "example_note": "Sparse dark curvilinear marks clustered in lower-right; rest of tile is blank surface."
+ },
+ {
+  "tile": [
+   2016,
+   2912
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.61,
+  "example_note": "Mostly blank tile with sparse dark marks in lower-center that may be faint ink traces or fiber/crack artifacts."
+ },
+ {
+  "tile": [
+   3136,
+   4928
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.18,
+  "example_note": "Mostly blank papyrus with a few scattered curvilinear marks concentrated near the top center."
+ },
+ {
+  "tile": [
+   2688,
+   6048
+  ],
+  "candidate_hits_across_layers": 8,
+  "gt_ink_fraction": 0.17,
+  "example_note": "Predominantly blank/bright papyrus with scattered small dark specks that likely represent noise or minor damage rather than clear ink letterforms."
+ },
+ {
+  "tile": [
+   2912,
+   3808
+  ],
+  "candidate_hits_across_layers": 7,
+  "gt_ink_fraction": 0.68,
+  "example_note": "Tile is predominantly bright/blank with only sparse faint marks that may be noise or trace ink."
+ },
+ {
+  "tile": [
+   1120,
+   6048
+  ],
+  "candidate_hits_across_layers": 7,
+  "gt_ink_fraction": 0.2,
+  "example_note": "Mostly blank surface with a few sparse strokes; the lower-right curved mark is the most convincing ink candidate."
+ },
+ {
+  "tile": [
+   672,
+   6272
+  ],
+  "candidate_hits_across_layers": 7,
+  "gt_ink_fraction": 0.08,
+  "example_note": "Mostly sparse fragmentary marks that may be faint ink traces or cracking artifacts, with a possible curved letter fragment mid-left."
+ },
+ {
+  "tile": [
+   1568,
+   6496
+  ],
+  "candidate_hits_across_layers": 7,
+  "gt_ink_fraction": 0.02,
+  "example_note": "Mostly blank surface with sharp short horizontal dashes lower-left that more likely reflect crack/fold artifacts than curvilinear ink."
+ },
+ {
+  "tile": [
+   2464,
+   672
+  ],
+  "candidate_hits_across_layers": 6,
+  "gt_ink_fraction": 0.18,
+  "example_note": "Sparse dark curvilinear marks on light background; prominent stroke at center-right could be ink but overall signal is fragmentary."
+ },
+ {
+  "tile": [
+   2016,
+   1120
+  ],
+  "candidate_hits_across_layers": 6,
+  "gt_ink_fraction": 0.04,
+  "example_note": "Predominantly bright background with thin sharp dark streaks consistent with fold/crack damage rather than ink."
+ },
+ {
+  "tile": [
+   2688,
+   1792
+  ],
+  "candidate_hits_across_layers": 6,
+  "gt_ink_fraction": 0.78,
+  "example_note": "Mostly blank surface with sparse thin dark streaks that resemble cracking or fold artifacts rather than clear ink."
+ }
+]
