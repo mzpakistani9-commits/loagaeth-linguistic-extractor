@@ -279,6 +279,13 @@ def save_outputs(results, prob_map, img_size, output_dir, threshold):
 # ─────────────────────────────────────────────
 #
 def main():
+    global MAX_TILES
+    if "--max-tiles" in sys.argv:
+        try:
+            MAX_TILES = int(sys.argv[sys.argv.index("--max-tiles") + 1])
+            print(f"CLI: --max-tiles={MAX_TILES}")
+        except (ValueError, IndexError):
+            print("WARN: could not parse --max-tiles; using full scan")
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         print("ERROR: Set ANTHROPIC_API_KEY environment variable first.")
@@ -338,10 +345,38 @@ def main():
     # Analyze tiles
     results = []
     errors  = 0
-    
+
+    # --- Crash-safe checkpointing: resume support ---
+    # Checkpoint file is per-layer, e.g. results/ckpt_layer26.json
+    _layer_stem = Path(SCROLL_IMAGE_PATH).stem  # e.g. "26"
+    ckpt_path = OUTPUT_DIR and Path(OUTPUT_DIR) / f"ckpt_layer{_layer_stem}.json" or Path(f"ckpt_layer{_layer_stem}.json")
+    done_map = {}  # "(tx,ty)" -> result dict
+    if ckpt_path.exists():
+        try:
+            with open(ckpt_path) as _f:
+                for _r in json.load(_f):
+                    done_map[f'({int(_r["tile_x"])},{int(_r["tile_y"])})'] = _r
+            print(f"  RESUME: found checkpoint with {len(done_map)} completed tiles -> {ckpt_path}")
+        except Exception as _e:
+            print(f"  Checkpoint unreadable ({_e}); starting fresh")
+
+    def _save_checkpoint():
+        """Atomic write: tmp file then rename, so shutdown never corrupts it."""
+        tmp = str(ckpt_path) + ".tmp"
+        with open(tmp, "w") as _f:
+            json.dump(list(done_map.values()), _f)
+        os.replace(tmp, ckpt_path)
+
     for tile_img, tx, ty in tqdm(tiles, desc="Analyzing tiles"):
+        key = f"({tx},{ty})"
+        if key in done_map:
+            results.append(done_map[key])
+            continue
         result = analyze_tile_with_claude(client, tile_img, tx, ty)
         results.append(result)
+        if result.get("status") != "error":
+            done_map[key] = result
+            _save_checkpoint()
         
         if result.get("status") != "ok":
             errors += 1
