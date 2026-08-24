@@ -5,9 +5,9 @@
 #   2. cd to Desktop so outputs land in Desktop/results/ (OUTPUT_DIR is relative)
 # REQUIREMENT: AgentRouter balance >= ~$10 (one 583-tile layer scan costs ~$9)
 
-export ANTHROPIC_API_KEY=sk-xfnSzBAhfBZiKw97LiqorPakKFfWzt3SKvuXn1bNEzL4OxkO
-export ANTHROPIC_BASE_URL=https://agentrouter.org/
-export VESUVIUS_MODEL=claude-opus-4-8
+: "${ANTHROPIC_API_KEY:?Set ANTHROPIC_API_KEY first: export ANTHROPIC_API_KEY=sk-...}"
+export ANTHROPIC_BASE_URL="${ANTHROPIC_BASE_URL:-https://agentrouter.org/}"
+export VESUVIUS_MODEL="${VESUVIUS_MODEL:-claude-opus-4-8}"
 
 LAYERS="${LAYERS:-26}"          # default: only missing layer; override e.g. LAYERS="26 27"
 RESULTS_DIR="/home/zubair/Desktop/results"
