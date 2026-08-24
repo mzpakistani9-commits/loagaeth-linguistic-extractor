@@ -191,6 +191,8 @@ def analyze_tile_with_claude(client: anthropic.Anthropic, tile: Image.Image,   t
             result["ink_regions"] = []
         if "letter_candidates" not in result:
             result["letter_candidates"] = []
+        result["tile_x"] = tile_x
+        result["tile_y"] = tile_y
         
         return result
         
@@ -201,6 +203,8 @@ def analyze_tile_with_claude(client: anthropic.Anthropic, tile: Image.Image,   t
             "ink_regions": [],
             "letter_candidates": [],
             "notes": f"API error: {str(e)[:60]}",
+            "tile_x": tile_x,
+            "tile_y": tile_y,
             "status": "error"
         }
 

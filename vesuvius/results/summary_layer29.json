@@ -1,0 +1,13 @@
+{
+  "run_timestamp": "20260822_191209",
+  "scroll_image": "/home/zubair/Desktop/vesuvius_data/Frag1/surface_volume/29.tif",
+  "total_tiles_analyzed": 583,
+  "successful_api_calls": 583,
+  "tiles_above_threshold": 110,
+  "threshold_used": 0.05,
+  "ink_coverage_percent": 18.87,
+  "model": "claude-opus-4-8",
+  "author": "Muhammad Zubair",
+  "contact": "mzpakistani9@gmail.com",
+  "github": "https://github.com/mzpakistani9-commits/loagaeth-linguistic-extractor"
+}
