@@ -30,11 +30,20 @@ Per-layer full scans (583 valid tiles each, 100% API success):
 
 See [`consensus_tiles.json`](consensus_tiles.json) for the full ranked consensus set and [`SUBMISSION.md`](SUBMISSION.md) for the complete write-up. Machine-verifiable run summaries are in [`results/summary_layer2{7,8,9}.json`](results/) — each records `successful_api_calls = 583 / total_tiles_analyzed = 583`.
 
+### Layer 26 status & model-calibration finding
+
+A layer-26 scan (583 tiles) was started to upgrade the consensus to 4 layers. During the run we discovered a **cross-model calibration hazard**: tiles analyzed with `claude-sonnet-4-8` returned probabilities of 0.45–0.72 on virtually every tile (mean ≈ 0.63) — including blank-papyrus control tiles that `claude-opus-4-8` scores at 0.02–0.10 in the identical prompt. Sonnet-4.8 does not honor the prompt's probability anchoring, so its outputs are **not comparable** with the calibrated Opus layers and were excluded from the consensus (raw data retained locally for the record).
+
+Consequence: the published consensus remains the calibrated 3-layer (27+28+29) fusion above. Layer-26 will be re-scanned on Opus before upgrading to a 4-layer consensus; [`fuse_4layer.py`](fuse_4layer.py) is ready and takes ~1 min once a calibrated layer-26 raw file exists.
+
+Engineering additions shipped during this work: crash-safe per-tile checkpointing with atomic writes + auto-resume (`ckpt_layer{N}.json`), and a fix for a silently-ignored `--max-tiles` CLI flag that previously caused unmasked 1073-tile runs instead of the intended 583-tile masked sets.
+
 ## Files
 
 | File | Purpose |
 |---|---|
-| `vesuvius_ink_detector.py` | Main detector — tiling, Claude vision inference, fusion, heatmap rendering |
+| `vesuvius_ink_detector.py` | Main detector — tiling, Claude vision inference, fusion, heatmap rendering, checkpoint/resume |
+| `fuse_4layer.py` | 4-layer consensus builder (free, local) — ready for calibrated layer-26 data |
 | `consensus_tiles.json` | 111 multi-layer consensus detections with per-layer probabilities |
 | `SUBMISSION.md` | Full submission write-up: methodology, metrics, top detections |
 | `results/summary_layer27.json` … `29.json` | Run summaries: API success counts, coverage, model, thresholds |
