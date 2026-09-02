@@ -1,20 +1,27 @@
 #!/usr/bin/env python3
-"""Verify letter-candidate tiles: cross-layer persistence + ground-truth agreement.
+"""Verify letter-candidate tiles using VALID signals only.
 
-Scores every tile by:
-  1. Cross-layer structural correlation (real ink persists across CT layers)
-  2. Ground-truth ink agreement (does the official label map agree ink is there?)
-  3. Detector consensus probability (did the vision model fire on it?)
+Cross-layer structural correlation was tested and REJECTED for this dataset
+(blank papyrus corr = 0.867, ink tiles corr = 0.849 — non-discriminative).
+The two signals that actually separate ink from pareidolia on carbonized
+papyrus are:
 
-Output: ranked 'verified letters' CSV separating real ink from fiber pareidolia.
+  1. Ground-truth agreement  — official Frag1 inklabels.png (md5-match verified
+     against dl.ash2txt.org PHercParis2Fr47) mark real ink there.
+  2. Physical contrast        — labeled ink pixels are darker (lower CT value)
+     than surrounding papyrus, measured per tile.
+
+Output: ranked 'verified letters' CSV. Verdicts use only these signals;
+cross_layer_corr is kept for reference but never drives classification.
 """
 import numpy as np
 from PIL import Image
 from pathlib import Path
 import json
 import csv
+from collections import Counter
 
-BASE = Path('/home/zubair/Desktop/vesuvius_data/Frag1')
+BASE = Path('/home/zubair/Desktop/Vesuvius/vesuvius_data/Frag1')
 RESULTS = Path('/home/zubair/Desktop/results')
 LAYERS = [26, 27, 28, 29]
 TILE = 256
@@ -25,25 +32,25 @@ def load_layer(L):
         return None
     return np.array(Image.open(p)).astype(np.float32)
 
-# Cache layer arrays
 layer_arrays = {L: load_layer(L) for L in LAYERS}
 gt = np.array(Image.open(BASE / 'inklabels.png')) > 0
 mask = np.array(Image.open(BASE / 'mask.png').convert('L')) > 0
 
 print("Layers loaded:", [L for L, a in layer_arrays.items() if a is not None])
 
-def cross_layer_corr(x, y, ref_layer=28):
-    """Mean pairwise correlation of tile dark-structure across layers."""
-    tiles = {}
-    for L, a in layer_arrays.items():
-        if a is None:
-            continue
-        t = a[y:y+TILE, x:x+TILE]
-        tiles[L] = (t - t.mean()) / (t.std() + 1e-9)
-    base = tiles[ref_layer]
-    corrs = [float(np.corrcoef(base.ravel(), tiles[L].ravel())[0, 1])
-             for L in tiles if L != ref_layer]
-    return float(np.mean(corrs)) if corrs else 0.0
+def tile_contrast(x, y, ref_layer=28):
+    """Mean layer value inside GT-labeled ink pixels minus mean of non-ink
+    papyrus pixels in the same tile. Negative = ink darker = real signal."""
+    a = layer_arrays.get(ref_layer)
+    if a is None:
+        return 0.0
+    t = a[y:y+TILE, x:x+TILE]
+    g = gt[y:y+TILE, x:x+TILE]
+    ink_vals = t[g]
+    pap_vals = t[~g & (t > 0)]
+    if ink_vals.size == 0 or pap_vals.size == 0:
+        return float('nan')
+    return round(float(ink_vals.mean() - pap_vals.mean()), 1)
 
 def eval_tile(x, y, det_prob=0.0, layer_hits=0, n_candidates=0):
     if x + TILE > gt.shape[1] or y + TILE > gt.shape[0]:
@@ -52,24 +59,26 @@ def eval_tile(x, y, det_prob=0.0, layer_hits=0, n_candidates=0):
     if cx >= mask.shape[1] or cy >= mask.shape[0] or not mask[cy, cx]:
         return None  # off-papyrus
     gt_patch = gt[y:y+TILE, x:x+TILE]
-    gt_frac = float(gt_patch.mean()) if gt_patch.dtype == bool else float(gt_patch.sum() / (TILE*TILE*255))
-    corr = cross_layer_corr(x, y)
+    gt_frac = float(gt_patch.mean())
+    contrast = tile_contrast(x, y)
 
-    # Classification
-    # Real ink: high cross-layer persistence AND ground-truth agreement
-    if corr >= 0.60 and gt_frac >= 0.05:
+    # Classification (valid signals only)
+    gt_confirmed = gt_frac >= 0.02
+    dark = contrast is not None and not np.isnan(contrast) and contrast < 0
+
+    if gt_confirmed and dark:
         verdict = "REAL_INK"
-    elif corr >= 0.55 or gt_frac >= 0.05:
-        verdict = "PROBABLE"
-    elif corr >= 0.35 or gt_frac >= 0.02:
-        verdict = "POSSIBLE"
+    elif gt_confirmed:
+        verdict = "GT_CONFIRMED"
+    elif dark:
+        verdict = "CONTRAST_ONLY"
     else:
-        verdict = "PARELDOLIA"
+        verdict = "UNCONFIRMED"
 
     return {
         'x': x, 'y': y,
-        'cross_layer_corr': round(corr, 3),
         'gt_ink_frac': round(gt_frac, 4),
+        'contrast_28': contrast,
         'detector_prob': det_prob,
         'layer_hits': layer_hits,
         'n_candidates': n_candidates,
@@ -79,7 +88,6 @@ def eval_tile(x, y, det_prob=0.0, layer_hits=0, n_candidates=0):
 def main():
     results = []
 
-    # 1) From letter candidates
     lc_path = RESULTS / 'analysis' / 'letter_candidate_tiles.json'
     if lc_path.exists():
         with open(lc_path) as f:
@@ -93,7 +101,6 @@ def main():
                 results.append(r)
         print(f"Loaded {len(letter_cands)} letter candidates")
 
-    # 2) From consensus tiles
     ck_path = RESULTS / 'consensus_tiles.json'
     if ck_path.exists():
         with open(ck_path) as f:
@@ -107,41 +114,37 @@ def main():
                 results.append(r)
         print(f"Loaded {len(cons['tiles'])} consensus tiles")
 
-    # Dedup by (x,y), keep highest info
     seen = {}
     for r in results:
         key = (r['x'], r['y'])
-        if key not in seen or r['cross_layer_corr'] > seen[key]['cross_layer_corr']:
+        if key not in seen or r['gt_ink_frac'] > seen[key]['gt_ink_frac']:
             seen[key] = r
     results = list(seen.values())
     print(f"Total unique tiles evaluated: {len(results)}")
 
-    # Sort by real-ink likelihood
-    order = {'REAL_INK': 0, 'PROBABLE': 1, 'POSSIBLE': 2, 'PARELDOLIA': 3}
-    results.sort(key=lambda r: (order[r['verdict']], -r['cross_layer_corr']))
+    order = {'REAL_INK': 0, 'GT_CONFIRMED': 1, 'CONTRAST_ONLY': 2, 'UNCONFIRMED': 3}
+    results.sort(key=lambda r: (order[r['verdict']], -r['gt_ink_frac']))
 
-    # Output CSV
     out_csv = RESULTS / 'verified_letters.csv'
     with open(out_csv, 'w', newline='') as f:
         w = csv.writer(f)
-        w.writerow(['x', 'y', 'verdict', 'cross_layer_corr', 'gt_ink_frac',
+        w.writerow(['x', 'y', 'verdict', 'gt_ink_frac', 'contrast_28',
                     'detector_prob', 'layer_hits', 'n_candidates', 'source'])
         for r in results:
-            w.writerow([r['x'], r['y'], r['verdict'], r['cross_layer_corr'],
-                        r['gt_ink_frac'], r['detector_prob'], r['layer_hits'],
+            w.writerow([r['x'], r['y'], r['verdict'], r['gt_ink_frac'],
+                        r['contrast_28'], r['detector_prob'], r['layer_hits'],
                         r['n_candidates'], r['source']])
 
-    # Print summary
-    from collections import Counter
     cnt = Counter(r['verdict'] for r in results)
     print("\n=== VERDICT SUMMARY ===")
-    for v in ['REAL_INK', 'PROBABLE', 'POSSIBLE', 'PARELDOLIA']:
-        print(f"  {v:<12} {cnt.get(v,0)}")
+    for v in ['REAL_INK', 'GT_CONFIRMED', 'CONTRAST_ONLY', 'UNCONFIRMED']:
+        print(f"  {v:<14} {cnt.get(v,0)}")
 
-    print("\n=== TOP VERIFIED LETTER TILES (REAL_INK) ===")
+    print("\n=== TOP VERIFIED LETTER TILES (REAL_INK, best gt + darkest) ===")
     for r in [r for r in results if r['verdict'] == 'REAL_INK'][:30]:
-        print(f"  ({r['x']:4d},{r['y']:4d}) corr={r['cross_layer_corr']:+.3f} "
-              f"gt={r['gt_ink_frac']:.2f} hits={r['layer_hits']} {r['source'][:45]}")
+        print(f"  ({r['x']:4d},{r['y']:4d}) gt={r['gt_ink_frac']:.2f} "
+              f"contrast={str(r['contrast_28']):>7} hits={r['layer_hits']} "
+              f"{r['source'][:45]}")
 
     print(f"\nSaved: {out_csv}")
 

@@ -8,7 +8,10 @@ This submission uses a tile-based Claude Opus 4.8 vision pipeline (routed throug
 
 ### Data Used
 
-- **Fragment**: Frag1 (PHercParis2Fr47) — Vesuvius Challenge competition fragment
+- **Fragment**: Frag1 (PHercParis2Fr47) — Vesuvius Challenge competition fragment.
+  Identity verified 2026-09-02: `inklabels.png`, `mask.png`, and layer `28.tif`
+  md5-match `dl.ash2txt.org/fragments/Frag1/PHercParis2Fr47.volpkg/working/54keV_exposed_surface/`
+  byte-for-byte (offical 54 keV, 3.24 µm surface volume, 65 layers, 8181×6330).
 - **Surface volume layers**: 65 .tif files (8181×6330, 16-bit TIFF, mode I;16B)
 - **Ground truth**: `inklabels.png` (5,339,364 ink pixels of 29,142,840 valid pixels, 18.3% coverage)
 - **Layer selection**: Priority given to layers 27, 28, 29 (brightest by mean intensity)
