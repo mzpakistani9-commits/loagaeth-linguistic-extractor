@@ -34,9 +34,12 @@ UNCONFIRMED**. Tile-level F1 = 0.668 (P 0.58 / R 0.79), P = 1.000 at thr 0.15.
 Following Paul Henderson's guidance to *be strict about false positives*, I want a
 fresh-eyes check before these become training labels:
 
-📦 **Package + crops for the confirmed/real tiles** (each across 3 CT layers):
-https://github.com/mzpakistani9-commits/loagaeth-linguistic-extractor/tree/main/vesuvius/verification
-(montage, zip + CSV in the folder)
+📦 **Package + crops for the confirmed/real tiles** — native 1:1 scan-resolution
+(no upscaling; sharp, per the community's image-quality bar):
+- **Sharp 8-bit preview crops (512×512 @ native):**
+  https://github.com/mzpakistani9-commits/loagaeth-linguistic-extractor/tree/main/vesuvius/verification/native_crops
+- Montage: https://raw.githubusercontent.com/mzpakistani9-commits/loagaeth-linguistic-extractor/main/vesuvius/verification/clear_letter_montage_8bit.png
+- Full package (zip + CSV + layers): https://github.com/mzpakistani9-commits/loagaeth-linguistic-extractor/tree/main/vesuvius/verification
 
 **The ask (top 20, images 00–19):** for any you can read —
 - Letter(s) you see
