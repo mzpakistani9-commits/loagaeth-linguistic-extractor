@@ -29,6 +29,13 @@ def main():
         im8 = to8(p16)
         im8.save(OUT8 / n.replace(".png", "_8.png"))
         thumbs.append((n, im8))
+    # also 8-bit previews of the true 256px native tiles
+    for m in manifest:
+        tile = m.get("tile_file")
+        if not tile:
+            continue
+        p16 = np.array(Image.open(SRC / tile))
+        to8(p16).save(OUT8 / tile.replace(".png", "_8.png"))
     # grid montage with labels
     cell = 200
     grid = 4

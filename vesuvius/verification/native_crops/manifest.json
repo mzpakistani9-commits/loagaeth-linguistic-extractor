@@ -1,6 +1,7 @@
 [
   {
     "file": "00_tile_3400_1800_gt91%.png",
+    "tile_file": "00_tile_3400_1800_gt91%_TILE256.png",
     "tile_x": 3400,
     "tile_y": 1800,
     "verdict": "REAL_INK",
@@ -8,10 +9,13 @@
     "contrast_28": -2024.4,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "01_tile_2600_1800_gt90%.png",
+    "tile_file": "01_tile_2600_1800_gt90%_TILE256.png",
     "tile_x": 2600,
     "tile_y": 1800,
     "verdict": "REAL_INK",
@@ -19,10 +23,13 @@
     "contrast_28": -1437.4,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "02_tile_2400_4200_gt88%.png",
+    "tile_file": "02_tile_2400_4200_gt88%_TILE256.png",
     "tile_x": 2400,
     "tile_y": 4200,
     "verdict": "GT_CONFIRMED",
@@ -30,10 +37,13 @@
     "contrast_28": 3757.6,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "03_tile_2800_600_gt81%.png",
+    "tile_file": "03_tile_2800_600_gt81%_TILE256.png",
     "tile_x": 2800,
     "tile_y": 600,
     "verdict": "REAL_INK",
@@ -41,10 +51,13 @@
     "contrast_28": -2814.4,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "04_tile_3800_800_gt80%.png",
+    "tile_file": "04_tile_3800_800_gt80%_TILE256.png",
     "tile_x": 3800,
     "tile_y": 800,
     "verdict": "GT_CONFIRMED",
@@ -52,10 +65,13 @@
     "contrast_28": 768.7,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "05_tile_4000_600_gt78%.png",
+    "tile_file": "05_tile_4000_600_gt78%_TILE256.png",
     "tile_x": 4000,
     "tile_y": 600,
     "verdict": "GT_CONFIRMED",
@@ -63,10 +79,13 @@
     "contrast_28": 3582.1,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "06_tile_2688_1792_gt78%.png",
+    "tile_file": "06_tile_2688_1792_gt78%_TILE256.png",
     "tile_x": 2688,
     "tile_y": 1792,
     "verdict": "REAL_INK",
@@ -74,10 +93,13 @@
     "contrast_28": -1437.2,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "07_tile_1600_1800_gt72%.png",
+    "tile_file": "07_tile_1600_1800_gt72%_TILE256.png",
     "tile_x": 1600,
     "tile_y": 1800,
     "verdict": "GT_CONFIRMED",
@@ -85,10 +107,13 @@
     "contrast_28": 1543.9,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "08_tile_3000_3800_gt72%.png",
+    "tile_file": "08_tile_3000_3800_gt72%_TILE256.png",
     "tile_x": 3000,
     "tile_y": 3800,
     "verdict": "REAL_INK",
@@ -96,10 +121,13 @@
     "contrast_28": -909.8,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "09_tile_2000_2800_gt70%.png",
+    "tile_file": "09_tile_2000_2800_gt70%_TILE256.png",
     "tile_x": 2000,
     "tile_y": 2800,
     "verdict": "REAL_INK",
@@ -107,10 +135,13 @@
     "contrast_28": -5386.8,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "10_tile_2912_3808_gt68%.png",
+    "tile_file": "10_tile_2912_3808_gt68%_TILE256.png",
     "tile_x": 2912,
     "tile_y": 3808,
     "verdict": "REAL_INK",
@@ -118,10 +149,13 @@
     "contrast_28": -1186.1,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   },
   {
     "file": "11_tile_2400_3200_gt64%.png",
+    "tile_file": "11_tile_2400_3200_gt64%_TILE256.png",
     "tile_x": 2400,
     "tile_y": 3200,
     "verdict": "REAL_INK",
@@ -129,6 +163,8 @@
     "contrast_28": -1392.1,
     "crop_px": 512,
     "crop_um": 1658.9,
+    "tile_px": 256,
+    "tile_um": 829.44,
     "source": "native 1:1 crop from layer-28.tif"
   }
 ]

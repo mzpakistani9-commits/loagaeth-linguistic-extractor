@@ -32,19 +32,33 @@ def load_layer():
     print(f"layer-28 loaded: {a.shape} dtype={a.dtype}")
     return a
 
+def _pad(a, box, size):
+    x0, y0, x1, y1 = box
+    h, w = size
+    x0b, y0b = max(x0, 0), max(y0, 0)
+    x1b, y1b = min(x1, w), min(y1, h)
+    crop = a[y0b:y1b, x0b:x1b]
+    pad = np.zeros((y1 - y0, x1 - x0), dtype=a.dtype)
+    pad[y0b - y0: y0b - y0 + crop.shape[0], x0b - x0: x0b - x0 + crop.shape[1]] = crop
+    return pad
+
 def write_crop(a, x, y, gt_frac, idx):
     """Center a 512x512 crop on tile top-left (x,y), clamped to image bounds."""
     cx, cy = x + TILE // 2, y + TILE // 2
     x0, y0 = cx - MARGIN, cy - MARGIN
     x1, y1 = x0 + CROP, y0 + CROP
-    x0b, y0b = max(x0, 0), max(y0, 0)
-    x1b, y1b = min(x1, a.shape[1]), min(y1, a.shape[0])
-    crop = a[y0b:y1b, x0b:x1b]
-    # pad if clamped at edge
-    pad = np.zeros((CROP, CROP), dtype=crop.dtype)
-    pad[y0b - y0: y0b - y0 + crop.shape[0], x0b - x0: x0b - x0 + crop.shape[1]] = crop
+    pad = _pad(a, (x0, y0, x1, y1), (a.shape[1], a.shape[0]))
     img = Image.fromarray(pad)
     name = f"{idx:02d}_tile_{x}_{y}_gt{gt_frac:.0%}.png"
+    img.save(OUT / name)
+    return name
+
+def write_tile(a, x, y, gt_frac, idx):
+    """Export the exact 256x256 detector tile at native 1:1 (no upscaling)."""
+    box = (x, y, x + TILE, y + TILE)
+    pad = _pad(a, box, (a.shape[1], a.shape[0]))
+    img = Image.fromarray(pad)
+    name = f"{idx:02d}_tile_{x}_{y}_gt{gt_frac:.0%}_TILE256.png"
     img.save(OUT / name)
     return name
 
@@ -76,12 +90,14 @@ def main():
     for idx, r in enumerate(top):
         x, y = int(r["x"]), int(r["y"])
         name = write_crop(a, x, y, float(r["gt_ink_frac"]), idx)
+        tile_name = write_tile(a, x, y, float(r["gt_ink_frac"]), idx)
         names.append(name)
         manifest.append({
-            "file": name, "tile_x": x, "tile_y": y,
+            "file": name, "tile_file": tile_name, "tile_x": x, "tile_y": y,
             "verdict": r["verdict"], "gt_ink_frac": float(r["gt_ink_frac"]),
             "contrast_28": float(r["contrast_28"]),
             "crop_px": CROP, "crop_um": round(CROP * PIXEL_UM, 1),
+            "tile_px": TILE, "tile_um": round(TILE * PIXEL_UM, 2),
             "source": "native 1:1 crop from layer-28.tif",
         })
     make_montage(names)
