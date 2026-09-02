@@ -38,6 +38,27 @@ Consequence: the published consensus remains the calibrated 3-layer (27+28+29) f
 
 Engineering additions shipped during this work: crash-safe per-tile checkpointing with atomic writes + auto-resume (`ckpt_layer{N}.json`), and a fix for a silently-ignored `--max-tiles` CLI flag that previously caused unmasked 1073-tile runs instead of the intended 583-tile masked sets.
 
+## Data provenance & fragment identity
+
+Fragment used here is the official competition **Frag 1 = `PHercParis2Fr47`**
+(54 keV, 3.24 µm — **not** the full-scroll `Scroll1/PHercParis4`; an earlier
+local note pointed at the wrong source and was corrected).
+
+Verified 2026-09-02 against `dl.ash2txt.org`:
+
+```
+fragments/Frag1/PHercParis2Fr47.volpkg/working/54keV_exposed_surface/
+  inklabels.png  md5 6cf3550e128b00884499b063e9d28895  (local == server)
+  mask.png       md5 8f283d6a0d60e73301f9e9d21aad3bbd  (local == server)
+  surface_volume/28.tif md5 01a8fc299ea2d541a8bce9b90e8a4d24 (local == server)
+```
+
+65 surface layers (00–64, 8181×6330, 16-bit), surface volume uuid `20230205211313`,
+voxel 3.24 µm. Local path: `~/Desktop/Vesuvius/vesuvius_data/Frag1`
+(`~/Desktop/vesuvius_data` is a symlink to it). The `inklabels.png` ground truth
+has 5,339,364 ink pixels / 29,142,840 valid = 18.3% coverage, consistent with the
+F1=0.668 evaluation.
+
 ## Files
 
 | File | Purpose |
@@ -60,4 +81,4 @@ export SCROLL_IMAGE_PATH=/path/to/Frag1/surface_volume/28.tif   # one layer per 
 python vesuvius_ink_detector.py --max-tiles 583 --threshold 0.05
 ```
 
-**Note:** set `SCROLL_IMAGE_PATH` to a single layer `.tif` per run — repeat for layers 26–29 and fuse with `fuse_layers.py`. Outputs raw per-tile JSON verdicts, a full-resolution probability heatmap, and a binary detection mask.
+**Note:** set `SCROLL_IMAGE_PATH` to a single layer `.tif` per run — repeat for layers 26–29 and fuse with `fuse_4layer.py`. Outputs raw per-tile JSON verdicts, a full-resolution probability heatmap, and a binary detection mask.
