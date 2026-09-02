@@ -299,14 +299,18 @@ def main():
     # Load or demo image
     if not Path(SCROLL_IMAGE_PATH).exists():
         print("Scroll image not found — running demo mode with synthetic data")
-        # Demo mode creates a synthetic test image
+        # Demo mode creates a synthetic test image (PIL only, no cv2 dependency)
+        import random as _random
         img = Image.new("RGB", (8181, 6330), (128, 128, 128))
-        for i in range(200):
-            x = np.random.randint(0, 7926)
-            y = np.random.randint(0, 5527)
-            size = np.random.randint(10, 50)
-            cv2.rectangle(img, (x, y), (x+size, y+size), (random.randint(0,255), random.randint(0,255), random.randint(0,255)), -1)
-        img_gray = img.convert("L")
+        draw = img.convert("L")
+        for _ in range(200):
+            x = _random.randint(0, 7926)
+            y = _random.randint(0, 5527)
+            size = _random.randint(10, 50)
+            g = _random.randint(0, 255)
+            rect = Image.new("L", (size, size), g)
+            draw.paste(rect, (x, y))
+        img = draw
     else:
         img = load_scroll_image(SCROLL_IMAGE_PATH)
     
