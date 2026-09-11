@@ -47,7 +47,7 @@ def call_openrouter_with_fallback(
     headers = {
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://huggingface.co/spaces/loagaeth-extractor",
+        "HTTP-Referer": "https://huggingface.co/spaces/mzubair-dh/loagaeth-extractor",
         "X-Title": "OMEGA v5 - Ancient Language Intelligence",
     }
 
@@ -90,7 +90,16 @@ def call_openrouter_with_fallback(
                 return {"success": False, "error": data["error"].get("message", str(data["error"]))}
 
             # Success!
-            content = data["choices"][0]["message"]["content"]
+            content = data["choices"][0]["message"].get("content") or ""
+            # Some auto-routed models return only "reasoning" with null content.
+            # Fall back to reasoning, otherwise treat as failure and try next model.
+            if not content.strip():
+                reasoning = data["choices"][0]["message"].get("reasoning") or ""
+                if reasoning.strip():
+                    content = f"{reasoning}\n\n_(reasoning-only response from {data.get('model', model)})_"
+                else:
+                    last_error = f"Model {model} returned empty content"
+                    continue
             return {"success": True, "content": content, "model": model}
 
         except requests.exceptions.Timeout:
