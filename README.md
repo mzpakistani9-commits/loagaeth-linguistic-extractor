@@ -3,7 +3,7 @@
 ### Universal Ancient Language Intelligence Engine — OMEGA v5
 **Muhammad Zubair** | MS Clinical Psychology, Bahria University Lahore, Pakistan  
 **Contact:** mzpakistani9@gmail.com | **Site:** DesiMindCare.com  
-**Live Demo:** [Hugging Face Spaces](https://huggingface.co/spaces/your-name/loagaeth-extractor)
+**Live Demo:** [Hugging Face Spaces](https://huggingface.co/spaces/mzubair-dh/loagaeth-extractor)
 
 ## About This Research Tool
 
@@ -64,7 +64,7 @@ Modern (120+):
 ## Quick Start
 
 ### Option 1: Use the live web app (no install)
-→ [huggingface.co/spaces/your-name/loagaeth-extractor](https://huggingface.co/spaces/your-name/loagaeth-extractor)
+→ [huggingface.co/spaces/mzubair-dh/loagaeth-extractor](https://huggingface.co/spaces/mzubair-dh/loagaeth-extractor)
 
 ### Option 2: Run offline (single HTML file)
 1. Download `OMEGA_v5_complete.html`
