@@ -18,103 +18,191 @@ import requests
 import gradio as gr
 from pathlib import Path
 
-# ─── OPENROUTER CONFIGURATION ───────────────────────────────────────────────
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
-
-# Auto-routing + reliable free models (April 2026)
-# First model routes to any available free model automatically
-OPENROUTER_MODELS = [
-    "openrouter/auto",  # Auto-routes to best available free model
-    "deepseek/deepseek-r1:free",  # DeepSeek R1 - reasoning
-    "google/gemma-2-9b-it:free",  # Gemma 2 9B
-    "meta-llama/llama-3.1-8b-instruct:free",  # Llama 3.1 8B
-    "qwen/qwen-2-7b-instruct:free",  # Qwen 2 7B
+# ─── LLM PROVIDER CHAIN (secrets come from env vars / HF Space secrets) ────
+# Keys are NEVER hardcoded here — set them as environment variables / HF Secrets:
+#   OPENROUTER_API_KEY, THEHIVE_API_KEY, DEEPSEEK_API_KEY, OPENAI_API_KEY
+# Providers are tried top-to-bottom; if a key is missing/expired/quota-limited,
+# the app automatically moves to the next provider (then the next model).
+PROVIDERS = [
+    {
+        "name": "OpenRouter",
+        "env": "OPENROUTER_API_KEY",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "models": [
+            "openrouter/auto",  # Auto-routes to best available free model
+            "deepseek/deepseek-r1:free",
+            "google/gemma-2-9b-it:free",
+            "meta-llama/llama-3.1-8b-instruct:free",
+            "qwen/qwen-2-7b-instruct:free",
+        ],
+        "headers_extra": {
+            "HTTP-Referer": "https://huggingface.co/spaces/mzubair-dh/loagaeth-extractor",
+            "X-Title": "OMEGA v5 - Ancient Language Intelligence",
+        },
+    },
+    {
+        "name": "TheHive",
+        "env": "THEHIVE_API_KEY",
+        "url": "https://api.thehive.ai/api/v3/chat/completions",
+        "models": [
+            "deepseek-ai/deepseek-v4.1-flash",
+            "hive/vision-language-model",
+        ],
+    },
+    {
+        "name": "DeepSeek",
+        "env": "DEEPSEEK_API_KEY",
+        "url": "https://api.deepseek.com/chat/completions",
+        "models": [
+            "deepseek-flash",
+            "deepseek-chat",
+        ],
+    },
+    {
+        "name": "OpenAI",
+        "env": "OPENAI_API_KEY",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "models": [
+            "gpt-4o-mini",
+            "gpt-4o",
+        ],
+    },
 ]
 
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 
-def call_openrouter_with_fallback(
+
+def call_llm_with_fallback(
     messages: list,
-    key: str,
+    key_override: str = "",
     max_tokens: int = 4000,
     timeout: int = 120,
 ) -> dict:
     """
-    Call OpenRouter API with automatic model fallback.
-    Tries each model in OPENROUTER_MODELS until one works.
+    Call any configured LLM provider with fully automatic fallback.
+    Chain: providers top-to-bottom, then models within a provider, then a
+    decreasing max_tokens ladder on HTTP 402 (insufficient credits/quota).
+    A key pasted in the UI (key_override) is tried as an OpenRouter key first.
     Returns: {"success": True, "content": str, "model": str} or {"success": False, "error": str}
     """
-    headers = {
-        "Authorization": f"Bearer {key}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://huggingface.co/spaces/mzubair-dh/loagaeth-extractor",
-        "X-Title": "OMEGA v5 - Ancient Language Intelligence",
-    }
+    # Graceful degradation ladder for credit limits (HTTP 402): retry the same
+    # model with fewer max_tokens until it fits the remaining balance.
+    max_tokens_ladder = [max_tokens, 2000, 1000, 400]
+
+    provider_list = list(PROVIDERS)
+    if (key_override or "").strip():
+        # UI-pasted key takes priority as an OpenRouter key, then the env chain.
+        provider_list = [{
+            "name": "OpenRouter (UI key)",
+            "env": "__override__",
+            "key": key_override.strip(),
+            "url": "https://openrouter.ai/api/v1/chat/completions",
+            "models": ["openrouter/auto"] + PROVIDERS[0]["models"],
+            "headers_extra": PROVIDERS[0]["headers_extra"],
+        }] + provider_list
 
     last_error = None
-    for model in OPENROUTER_MODELS:
-        payload = {
-            "model": model,
-            "max_tokens": max_tokens,
-            "messages": messages,
+    for provider in provider_list:
+        key = provider.get("key") or os.getenv(provider["env"], "").strip()
+        if not key:
+            continue
+
+        headers = {
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
         }
+        headers.update(provider.get("headers_extra") or {})
 
-        try:
-            response = requests.post(
-                OPENROUTER_ENDPOINT,
-                headers=headers,
-                json=payload,
-                timeout=timeout,
-            )
+        provider_failed_auth = False
+        for model in provider["models"]:
+            if provider_failed_auth:
+                break
 
-            # If 404, try next model
-            if response.status_code == 404:
-                last_error = f"Model {model} not available (404)"
-                continue
+            for mt in max_tokens_ladder:
+                payload = {
+                    "model": model,
+                    "max_tokens": mt,
+                    "messages": messages,
+                }
 
-            # Other errors - return immediately
-            if response.status_code == 401:
-                return {"success": False, "error": "Invalid API key. Get one at https://openrouter.ai/keys"}
-            if response.status_code == 429:
-                return {"success": False, "error": "Rate limit reached. Wait a moment and try again."}
-            if response.status_code != 200:
-                return {"success": False, "error": f"API error {response.status_code}: {response.text[:500]}"}
+                try:
+                    response = requests.post(
+                        provider["url"],
+                        headers=headers,
+                        json=payload,
+                        timeout=timeout,
+                    )
+                    code = response.status_code
 
-            data = response.json()
-            if "error" in data:
-                # If it's a model error, try next
-                if "model" in data["error"].get("message", "").lower() or data["error"].get("code") == 404:
-                    last_error = f"Model {model}: {data['error'].get('message', 'error')}"
-                    continue
-                # Other errors - return immediately
-                return {"success": False, "error": data["error"].get("message", str(data["error"]))}
+                    # Model missing / unsupported — next model
+                    if code == 404:
+                        last_error = f"{provider['name']}/{model} not available (404)"
+                        break
 
-            # Success!
-            content = data["choices"][0]["message"].get("content") or ""
-            # Some auto-routed models return only "reasoning" with null content.
-            # Fall back to reasoning, otherwise treat as failure and try next model.
-            if not content.strip():
-                reasoning = data["choices"][0]["message"].get("reasoning") or ""
-                if reasoning.strip():
-                    content = f"{reasoning}\n\n_(reasoning-only response from {data.get('model', model)})_"
-                else:
-                    last_error = f"Model {model} returned empty content"
-                    continue
-            return {"success": True, "content": content, "model": model}
+                    # Invalid API key for this provider — skip the whole provider
+                    if code == 401:
+                        last_error = f"{provider['name']}/{model}: invalid API key (401)"
+                        provider_failed_auth = True
+                        break
 
-        except requests.exceptions.Timeout:
-            return {"success": False, "error": "Request timed out (120s). Try again or use shorter input."}
-        except requests.exceptions.RequestException as e:
-            last_error = f"Network error: {str(e)}"
-            continue
-        except (KeyError, IndexError) as e:
-            last_error = f"Unexpected API response: {str(e)}"
-            continue
+                    # Rate limited — next model
+                    if code == 429:
+                        last_error = f"{provider['name']}/{model}: rate limit reached (429)"
+                        break
 
-    # All models failed
+                    # Insufficient credits/quota for this max_tokens — retry fewer
+                    if code == 402:
+                        last_error = f"{provider['name']}/{model}: insufficient credits for {mt} tokens (402)"
+                        continue
+
+                    # Provider/model-level rejection (e.g. no vision support) — next model
+                    if code != 200:
+                        last_error = f"{provider['name']}/{model}: API error {code}: {response.text[:300]}"
+                        break
+
+                    data = response.json()
+                    if "error" in data:
+                        msg = data["error"].get("message", str(data["error"]))
+                        code_e = data["error"].get("code")
+                        if code_e == 401 or "model" in msg.lower() or code_e == 404:
+                            last_error = f"{provider['name']}/{model}: {msg}"
+                            if code_e == 401:
+                                provider_failed_auth = True
+                            break
+                        # Other provider-level errors — next model
+                        last_error = f"{provider['name']}/{model}: {msg}"
+                        break
+
+                    # Success!
+                    content = data["choices"][0]["message"].get("content") or ""
+                    # Some auto-routed models return only "reasoning" with null content.
+                    # Fall back to reasoning, otherwise treat as failure and try next model.
+                    if not content.strip():
+                        reasoning = data["choices"][0]["message"].get("reasoning") or ""
+                        if reasoning.strip():
+                            content = f"{reasoning}\n\n_(reasoning-only response from {data.get('model', model)})_"
+                        else:
+                            last_error = f"{provider['name']}/{model} returned empty content"
+                            break
+                    return {"success": True, "content": content, "model": f"{model} ({provider['name']})"}
+
+                except requests.exceptions.Timeout:
+                    return {"success": False, "error": "Request timed out (120s). Try again or use shorter input."}
+                except requests.exceptions.RequestException as e:
+                    last_error = f"{provider['name']}/{model}: network error: {str(e)}"
+                    break
+                except (KeyError, IndexError) as e:
+                    last_error = f"{provider['name']}/{model}: unexpected API response: {str(e)}"
+                    break
+
+    # All providers/models failed
+    tried = ", ".join(
+        f"{p['name']}" for p in provider_list
+        if p.get("key") or os.getenv(p["env"], "").strip()
+    ) or "none (no API keys configured)"
     return {
         "success": False,
-        "error": f"All models failed. Last error: {last_error}. Tried: {', '.join(OPENROUTER_MODELS)}"
+        "error": f"All providers failed. Last error: {last_error}. Tried: {tried}"
     }
 
 
@@ -345,16 +433,17 @@ def analyse_text(
     ms_context: str,
     api_key: str,
 ) -> str:
-    """Main analysis function called by Gradio. Uses OpenRouter API."""
+    """Main analysis function called by Gradio. Uses the LLM provider chain."""
 
-    # Use UI-provided key if given, else fall back to env variable
-    key = (api_key or "").strip() or OPENROUTER_API_KEY
-    if not key or not key.startswith("sk-or-"):
+    # Use UI-provided key if given (tried first as OpenRouter), else provider chain
+    key = (api_key or "").strip()
+    if not key and not any(os.getenv(p["env"], "").strip() for p in PROVIDERS):
         return (
-            "⚠ OpenRouter API key required.\n"
-            "• Set environment variable: OPENROUTER_API_KEY\n"
-            "• Or paste your key in the input field above (starts with sk-or-...)\n"
-            "• Get a free key at: https://openrouter.ai/keys"
+            "⚠ No API key configured.\n"
+            "• Add keys as HF Space secrets: OPENROUTER_API_KEY, THEHIVE_API_KEY, "
+            "DEEPSEEK_API_KEY, OPENAI_API_KEY (any one is enough — they fall back automatically)\n"
+            "• Or paste any API key in the input field above\n"
+            "• Get free keys at: https://openrouter.ai/keys · https://platform.deepseek.com/api_keys · https://thehive.ai/models?api_keys=1"
         )
 
     system = build_system_prompt(mode, selected_scripts, output_format, depth, ms_context)
@@ -418,7 +507,7 @@ def analyse_text(
         {"role": "user", "content": user_content},
     ]
 
-    result = call_openrouter_with_fallback(messages=messages, key=key, max_tokens=4000)
+    result = call_llm_with_fallback(messages=messages, key_override=key, max_tokens=4000)
 
     if not result["success"]:
         return f"⚠ {result['error']}"
@@ -429,10 +518,10 @@ def analyse_text(
 
 
 def gardiner_translate(codes: str, mode: str, api_key: str) -> str:
-    """Translate Gardiner codes via OpenRouter API."""
-    key = (api_key or "").strip() or OPENROUTER_API_KEY
-    if not key or not key.startswith("sk-or-"):
-        return "⚠ OpenRouter API key required (sk-or-...). Set OPENROUTER_API_KEY env var or paste key above."
+    """Translate Gardiner codes via the LLM provider chain."""
+    key = (api_key or "").strip()
+    if not key and not any(os.getenv(p["env"], "").strip() for p in PROVIDERS):
+        return "⚠ No API key configured. Add HF Space secrets (OPENROUTER_API_KEY / THEHIVE_API_KEY / DEEPSEEK_API_KEY / OPENAI_API_KEY) or paste a key above."
     if not codes.strip():
         return "⚠ Enter Gardiner codes (e.g. G17 N35 X1 O1)."
 
@@ -454,7 +543,7 @@ Mode: {mode}"""
         {"role": "user", "content": f"Translate these Egyptian hieroglyphs (Gardiner codes):\n{codes}"},
     ]
 
-    result = call_openrouter_with_fallback(messages=messages, key=key, max_tokens=2000)
+    result = call_llm_with_fallback(messages=messages, key_override=key, max_tokens=2000)
 
     if not result["success"]:
         return f"⚠ {result['error']}"
@@ -501,10 +590,10 @@ with gr.Blocks(title="OMEGA v5 — Ancient Language Intelligence") as demo:
             with gr.Row():
                 with gr.Column(scale=1):
                     api_key = gr.Textbox(
-                        label="OpenRouter API Key (optional if OPENROUTER_API_KEY env var is set)",
-                        placeholder="sk-or-v1-...",
+                        label="API Key (optional — used first, then falls back to Space secrets)",
+                        placeholder="sk-...",
                         type="password",
-                        info="Get free key at openrouter.ai/keys. Or set OPENROUTER_API_KEY env variable.",
+                        info="Paste any key (OpenRouter/DeepSeek/OpenAI/TheHive) or leave empty to use HF Space secrets: OPENROUTER_API_KEY, THEHIVE_API_KEY, DEEPSEEK_API_KEY, OPENAI_API_KEY.",
                     )
                     text_input = gr.Textbox(
                         label="Text Input",
@@ -614,9 +703,9 @@ T=warfare, U=agriculture, V=rope, W=vessels, X=bread, Y=writing, Z=strokes, Aa=u
                     value="Full translation + phonetic analysis",
                 )
             api_key_fab = gr.Textbox(
-                label="OpenRouter API Key (optional if env var set)",
+                label="API Key (optional — falls back to Space secrets)",
                 type="password",
-                placeholder="sk-or-v1-...",
+                placeholder="sk-...",
             )
             gard_btn = gr.Button("𓂀  Translate Hieroglyphs", variant="primary")
             gard_result = gr.Textbox(label="Translation Result", lines=20, elem_classes=["output-textbox"])
@@ -657,9 +746,8 @@ This knowledge is **automatically injected into every AI query** — you never n
 
 **Researcher**: Muhammad Zubair | MS Clinical Psychology | Bahria University Lahore, Pakistan  
 **Contact**: mzpakistani9@gmail.com | DesiMindCare.com  
-**AI Engine**: Auto-routing free models (OpenRouter auto-select)  
-**Fallback models**: DeepSeek R1 → Gemma 2 9B → Llama 3.1 8B → Qwen 2 7B  
-**API Provider**: OpenRouter — https://openrouter.ai  
+**AI Engine**: Multi-provider automatic fallback — OpenRouter → TheHive → DeepSeek → OpenAI  
+**Setup**: Add any of these HF Space secrets — `OPENROUTER_API_KEY`, `THEHIVE_API_KEY`, `DEEPSEEK_API_KEY`, `OPENAI_API_KEY`. If one key expires or hits quota, the next is tried automatically.  
 **Rate limits**: 20 requests/min, 200 requests/day per model  
 
 ### Published Research Foundation
