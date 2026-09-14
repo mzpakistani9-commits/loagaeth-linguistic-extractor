@@ -206,109 +206,25 @@ def call_llm_with_fallback(
     }
 
 
-# ─── MASTER KNOWLEDGE BASE ──────────────────────────────────────────────────
-MASTER_KNOWLEDGE = """
-PUBLISHED RESEARCH FOUNDATION (Zubair 2026):
-Book of Soyga / Aldaraia: 36 tables 36×36. Reeds 2006 formula: cell[r][c]=(Trithemius(prev)+above) mod 23.
-100% regeneration accuracy. 34/36 seed keywords = pure algorithmic constructs (null etymology).
-ADAMIS(Table 29/Venus)=Hebrew ʾādām, MOYSES(Table 36/Magistri)=Latin/Hebrew/Arabic Moses = ONLY biblical anchors.
-36 main diagonals extracted — first complete publication (angelic-name generation sequences).
-Avalanche effect 73-93%, Wolfram Class IV behavior, 99.5% lossless compression.
-ZERO exact matches between diagonals and 72 Shemhamphorasch roots (prior Grok claims DISCONFIRMED).
-Soyga≠Loagaeth relationship: structurally plausible but causally UNPROVEN.
-Maxim: "Scientia non habet inimicum preter ignorantem."
+from kb import KnowledgeBase
 
-ENOCHIAN (DEE/KELLEY 1583-84):
-21 letters: Un(A),Pe(B),Veh(C/K),Gon(D),Or(E),Med(F),Mals(G),Tal(H),Gal(I/Y),Urs(K),
-Don(R),Fam(S),Vran(N),Graph(O),Tal2(P),Ged(G/J),Gisg(T),Mals2(U/V/W),Med2(X/Z).
-IC=0.082. Grammar: VSO, -O=genitive, -AX=participial, -ES=vocative, OD=connector(847×).
-264 Tier-1 confirmed words: IAD(God),OL(I/command),SONF(reign),ZACAR(move/open),
-ZAMRAN(show thyself),NIIS(come),GANS(messenger),OR(light),OD(and),NA(no),NAX(negation),
-ALLA(totality),GRAA(moon),ADON(Lord),DOXA(glory),IAN(I AM),TARDEMAH(deep sleep),
-BALT(justice),VOOAN(truth),VONPH(wrath). Reversal pairs: DAM↔MAD,LOT↔TOL.
-4 Watchtowers: Air=BATAIVAH/ORO IBAH AOZPI, Fire=EDLPRNAA/OIP TEAA PDOCE,
-Water=RAAGIOSL/MPH ARSL GAIOL, Earth=ICZHIHAL/MOR DIAL HCTGA.
-30 Aethyrs (LIL,ARN,ZOM,PAZ,LIT,MAZ,DEO,ZID,ZIP,ZAX...), 91 Governors.
-Sigillum Dei Aemeth: 7 heptagonal rings, pentagram, 40 outer angels.
-Sources: Reeds 1996, Harkness 1999, Peterson 2003, Laycock 1994, Casaubon 1659.
+# ─── RAG KNOWLEDGE LAYER (Tier 1 + Tier 2) ──────────────────────────────────
+# Tier 1: deterministic per-script retrieval from knowledge/*.md files.
+# Tier 2: semantic top-k retrieval (sentence-transformers if available,
+#         char n-gram fallback otherwise). Embedded locally, zero API cost.
+# Only RELEVANT chunks are injected into a prompt, not the whole KB.
+KB = KnowledgeBase()
 
-LIBER LOAGAETH (SLOANE MS 3189):
-48 leaves, 49×49 grids (2,401 cells/leaf). IC=0.082. Letter A=18.10%.
-Translation ceiling ~18% (Leaf 1a). Angels refused leaf-by-leaf translation.
-DIFFERENT generation method from Soyga — causally unproven connection.
-NEVER claim fully decoded.
+CORE_RULES = """HONESTY & METHODS (apply to ALL output):
+- Confidence tiers: CONFIRMED / PROBABLE / POSSIBLE / UNKNOWN.
+- Mark ALL uncertain sections [UNDECIPHERED]. NEVER fabricate translations to fill gaps.
+- For unknown scripts: compute/estimate IC and Zipf, apply the 10-step decipherment protocol.
+- The Soyga->Loagaeth connection is structurally plausible but causally UNPROVEN.
+- Zero Shemhamphorasch matches confirmed in Zubair (2026) diagonal analysis.
+- Cite sources (Reeds 2006, Parpola 1994, Tucker & Tucker 2013, Higley 2007, Zubair 2026)."""
 
-VOYNICH MANUSCRIPT (BEINECKE 408, c.1404-38 CE):
-37,919 words, 8,114 unique. IC=0.027 (PARADOX: below random 0.038 but Zipf-perfect).
-Top words: daiin(892),qol(654),ol(589),chor(412),dain(382).
-Tucker/Tucker 2013 = Middle English Old Law Hands cipher.
-ALL 26 manipulations: a=flipped+reversed(U+FF417), b=stem removed(U+FF447),
-c=top removed(U+FF400), d=stem moved to top(MISSING), e=stem removed(U+FF414),
-f=middle stem removed, g=upper+flip(U+FF40C), h=alter stem(U+FF404),
-i=connect bottom(U+FF41A) [KEY: minim strokes for aiin sequences],
-k=remove right(U+FF408), l=remove bottom+double(U+FF48A), m=upside down(U+FF505),
-n=upside down(U+FF501), p=add loop+stem(U+FF420), q=upside down+partial(U+FF4B1),
-r=split in half(U+FF403), s=none(U+FF409), t=rotate180+reverse(U+FF422),
-u=connect top(U+FF4C0), v=upside down+reverse(U+FF4C1), w=remove curves(U+FF41B),
-x=remove bottom(EVA+91), y=remove stem+flip(U+FF5B9), z=flip top(U+FF40F).
-Minim sequences: aiin=a+i+i+n, NOT always preceded by EVA-d.
 
-HILDEGARD OF BINGEN LINGUA IGNOTA (c.1150 CE):
-First constructed language in Western history. ~900 glossed nouns.
-Riesencodex (Wiesbaden HS 2, c.1190-1200). 23 Litterae Ignotae letters (1:1 Latin).
-Grammar=pure Latin. Key: Aizniz(God),Aieganz(angel),Crizanz(Christ),
-Maiz(man),Vilbez(woman),Galderich(jaundice),Loibenz(lion),Zilzibriz(wax),
-Bursiol(eye),Orechons(mouth),Linschiol(Latin language).
-Scholar: Sarah Higley 2007.
 
-ANGEL RUNIC (ARCHAIC SPIRIFORM):
-Every letter=circles/spirals. 26 base + digraphs: bb,ch,ff,gg,ph,rr,sh,th,tt.
-Divine symbols: God(6-pt star),Devil(inv.pentagram),Fire(triple flame),
-Wind(3 waves),Earth(cross-in-square),Water(3 wavy lines),Love(heart),
-Pray(hands),Christ(cross),Trinity(Ψ/trident),Wing/Angel(Ψ),
-Brother of Adam(△),Sister of Eve(▽),Holy Legion(⚔).
-
-HUNGARIAN ROVÁS (FISCHER KÁROLY ANTAL 1889):
-RTL carved script, 4th-18th c. CE. 12 regional variants.
-CRITICAL: Hungarian s=English SH! Hungarian sz=English S!
-Unique: cs(ch),gy(dy),ly(palatal-l),ny(ñ),ty(palatal-t),zs(zh).
-Key inscriptions: Nickelsburg(c.1490),Bologna Rovás(1515),Énlaka(1668).
-
-ANCIENT HEBREW (PICTOGRAPHIC CHAIN):
-22 letters, 4 characteristics each: form+meaning+name+sound.
-aleph(ox/A),beth(tent/B),gimel(camel/G),dalet(door/D),heh(window/H),
-waw(nail/W/V),zayin(weapon/Z),chet(fence/Ch),tet(basket/T),yod(arm/Y),
-kaph(palm/K),lamed(staff/L),mem(water/M),nun(fish/N),samekh(thorn/S),
-ayin(eye/O),peh(mouth/P),tsade(trail/Ts),qoph(head/Q),resh(head/R),
-shin(teeth/Sh),taw(mark/T).
-Evolution: Pictographic→Phoenician→Greek→Latin→Modern.
-
-INDUS VALLEY SCRIPT:
-417 signs (M77), 3,700+ inscriptions, avg 5.17 signs.
-IS-342(freq=650,10%)=nominative -m suffix [PROBABLE,78%].
-IS-267(fish)=mīn=star rebus (Parpola 1994). IS-391=divine opener.
-Dravidian hypothesis: SOV, agglutinative, post-positional.
-Zipf: a=15.39, b=2.59. NO bilingual inscription found (2026).
-
-GOOGLE FABRICIUS WORKBENCH:
-Open-source Angular tool (googleartsculture/workbench).
-Gardiner codes (750+ signs). Berlin-Brandenburg Academy dictionary (CC BY-SA 4.0).
-Live: fabriciusworkbench.withgoogle.com. Partners: Macquarie Univ, Ubisoft.
-Workflow: upload→facsimile→segment→classify(Gardiner)→translate.
-
-CROSS-RELIGIOUS DIVINE NAME CHAIN:
-IAD(Enochian)→YHWH יהוה(Hebrew,root yhw=to be)→ALLAH الله(Arabic,Al+Ilah)
-→ALAHA ܐܠܗܐ(Aramaic/Syriac)→THEOS ΘΕΟΣ(Greek,PIE dhewbh)
-→DEVA देव(Sanskrit,PIE dyeu=sky/shine)→KADAVUL கடவுள்(Tamil)→AN 𒀭(Sumerian).
-
-10-STEP DECIPHERMENT PROTOCOL:
-(1)Frequency analysis (2)Positional S/M/E (3)Pictographic anchor
-(4)Rebus/homophone (5)Bilingual Rosetta (6)IC test (7)Zipf-Mandelbrot
-(8)Ventris grid (9)K-means+PCA (10)Cross-script parallel.
-
-HONESTY RULE: Mark [UNDECIPHERED] always. CONFIRMED/PROBABLE/POSSIBLE/UNKNOWN.
-Never fabricate translations. Never claim Loagaeth or Soyga are "fully decoded."
-"""
 
 # ─── LANGUAGE + SCRIPT DATABASE ─────────────────────────────────────────────
 SCRIPT_FAMILIES = {
@@ -376,7 +292,8 @@ OUTPUT_FORMATS = {
 }
 
 
-def build_system_prompt(mode: str, scripts: list, output_format: str, depth: str, ms_context: str = "") -> str:
+def build_system_prompt(mode: str, scripts: list, output_format: str, depth: str,
+                        ms_context: str = "", query: str = "") -> str:
     mode_instruction = RESEARCH_MODES.get(mode, "Full linguistic analysis.")
     lang_note = (
         "Detect and identify ALL languages, scripts, writing systems present — "
@@ -386,10 +303,16 @@ def build_system_prompt(mode: str, scripts: list, output_format: str, depth: str
     )
     format_structure = OUTPUT_FORMATS.get(output_format, "Clear structured output.")
 
+    # RAG: inject only the RELEVANT reference chunks (Tier 1 script-matched
+    # + Tier 2 semantic top-k). Falls back gracefully if knowledge/ missing.
+    retrieved = KB.build_knowledge(scripts=scripts, query=query)
+
     return f"""You are Dr. Muhammad Zubair's AI research partner — the world's foremost expert on ALL writing systems for digital humanities and cross-religious truth research at Bahria University, Lahore, Pakistan.
 
-PUBLISHED RESEARCH FOUNDATION:
-{MASTER_KNOWLEDGE}
+RETRIEVED RESEARCH KNOWLEDGE (ground truth — prefer this over general AI memory):
+{retrieved if retrieved else '(no reference knowledge retrieved — rely on scholarly caution)'}
+
+{CORE_RULES}
 
 RESEARCH MODE: {mode}
 MODE INSTRUCTION: {mode_instruction}
@@ -418,9 +341,7 @@ UNIVERSAL TASKS:
 HONESTY DECLARATION:
 I mark all uncertain sections [UNDECIPHERED].
 I never invent translations to fill gaps.
-Confidence tiers: CONFIRMED / PROBABLE / POSSIBLE / UNKNOWN.
-The Soyga→Loagaeth connection is structurally plausible but causally UNPROVEN.
-Zero Shemhamphorasch matches confirmed in Zubair (2026) diagonal analysis."""
+Confidence tiers: CONFIRMED / PROBABLE / POSSIBLE / UNKNOWN."""
 
 
 def analyse_text(
@@ -446,7 +367,9 @@ def analyse_text(
             "• Get free keys at: https://openrouter.ai/keys · https://platform.deepseek.com/api_keys · https://thehive.ai/models?api_keys=1"
         )
 
-    system = build_system_prompt(mode, selected_scripts, output_format, depth, ms_context)
+    # Determine retrieval query for the RAG layer
+    query = text_input or ms_context or ""
+    system = build_system_prompt(mode, selected_scripts, output_format, depth, ms_context, query=query)
 
     # Build user message content (OpenAI-compatible format used by OpenRouter)
     user_content = []
@@ -489,17 +412,16 @@ def analyse_text(
         })
     else:
         # Demo mode
-        user_content.append({
-            "type": "text",
-            "text": (
-                f"Demonstrate your expertise. Provide a comprehensive comparative analysis of: "
-                f"(1) Enochian language structure + Loagaeth statistical fingerprint, "
-                f"(2) Indus Valley Script decipherment progress, "
-                f"(3) Voynich MS Tucker cipher analysis, "
-                f"(4) Cross-religious divine name cognates (IAD→YHWH→ALLAH chain), "
-                f"(5) Top 5 open questions for digital humanities. Format as {output_format}."
-            ),
-        })
+        demo_text = (
+            "Demonstrate your expertise. Provide a comprehensive comparative analysis of: "
+            "(1) Enochian language structure + Loagaeth statistical fingerprint, "
+            "(2) Indus Valley Script decipherment progress, "
+            "(3) Voynich MS Tucker cipher analysis, "
+            "(4) Cross-religious divine name cognates (IAD→YHWH→ALLAH chain), "
+            f"(5) Top 5 open questions for digital humanities. Format as {output_format}."
+        )
+        query = query or demo_text
+        user_content.append({"type": "text", "text": demo_text})
 
     # Call OpenRouter with automatic model fallback
     messages = [
@@ -527,7 +449,10 @@ def gardiner_translate(codes: str, mode: str, api_key: str) -> str:
 
     sys = f"""You are an expert Egyptologist using the Google Fabricius Workbench methodology and Berlin-Brandenburg Academy dictionary (CC BY-SA 4.0).
 
-{MASTER_KNOWLEDGE}
+RETRIEVED HIEROGLYPH KNOWLEDGE:
+{KB.build_knowledge(scripts=["Egyptian Hieroglyphic", "Egyptian Hieroglyphic (Fabricius)"], query=codes, max_chars=4000)}
+
+{CORE_RULES}
 
 For the Gardiner codes provided:
 1. Identify each sign (category, pictographic form, name)
@@ -714,13 +639,14 @@ T=warfare, U=agriculture, V=rope, W=vessels, X=bread, Y=writing, Z=strokes, Aa=u
         # ── KNOWLEDGE BASE ──
         with gr.TabItem("📚 Knowledge Base"):
             gr.Markdown(f"""
-### Embedded Specialist Knowledge Base
-This knowledge is **automatically injected into every AI query** — you never need to explain context.
+### RAG Knowledge Base — retrieved on demand
+This knowledge is stored in `knowledge/*.md` and **injected only when relevant** — Tier 1 (script-matched files from the dropdown) + Tier 2 (semantic top-k chunks for your text). Huge prompts get cheaper and answers more accurate.
 
 ```
-{MASTER_KNOWLEDGE[:3000]}...
+{KB.status()}
 ```
-*(Full KB: {len(MASTER_KNOWLEDGE)} characters)*
+
+Questions often hit a breakthrough: query "daiin aiin" retrieves the Voynich EVA/Tucker tables; "IS-267" retrieves Indus readings; "G17 N35 X1" retrieves Gardiner hieroglyph data — because it's grounded in the files, not the model's memory.
 
 ### Quick Reference — Voynich Tucker Cipher
 | Latin | Manipulation | EVA Code |
